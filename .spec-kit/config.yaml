@@ -1,0 +1,42 @@
+# Spec Kit Configuration
+version: 1.0.0
+project:
+  name: "Phase II Full-Stack Todo App"
+  description: "Next.js + FastAPI Todo Application with JWT Authentication"
+  tech_stack:
+    - frontend: "Next.js with Better Auth"
+    - backend: "FastAPI with JWT"
+    - database: "Neon PostgreSQL with SQLModel"
+    - auth: "Better Auth with JWT plugin"
+
+spec_types:
+  - name: "overview"
+    description: "Project overview and objectives"
+    path: "specs/overview.md"
+
+  - name: "architecture"
+    description: "System architecture and components"
+    path: "specs/architecture.md"
+
+  - name: "feature"
+    description: "Feature specifications"
+    path: "specs/features/"
+
+  - name: "api"
+    description: "API specifications"
+    path: "specs/api/"
+
+  - name: "database"
+    description: "Database schema and models"
+    path: "specs/database/"
+
+  - name: "ui"
+    description: "User interface specifications"
+    path: "specs/ui/"
+
+rules:
+  - "Specs control code. Code never leads specs."
+  - "All implementation must reference spec files using @specs/ syntax"
+  - "Security requirements must be validated before deployment"
+  - "JWT authentication must be implemented for all protected routes"
+  - "User isolation must be enforced at database level"
