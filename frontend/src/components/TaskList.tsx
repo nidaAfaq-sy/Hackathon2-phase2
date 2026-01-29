@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Task, TaskFilter as TaskFilterType } from '../lib/types';
 import TaskItem from './TaskItem';
-import TaskFilter from './TaskFilter';
+import TaskFilterComponent from './TaskFilterComponent';
 import TaskSearch from './TaskSearch';
 import EmptyState from './EmptyState';
 import LoadingSpinner from './LoadingSpinner';
@@ -59,7 +59,7 @@ export default function TaskList({
       {/* Header with controls */}
       <div className="task-list-header flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-          <TaskFilter currentFilter={filter} onFilterChange={setFilter} />
+          <TaskFilterComponent currentFilter={filter} onFilterChange={setFilter} />
           <TaskSearch value={searchQuery} onChange={setSearchQuery} />
         </div>
       </div>

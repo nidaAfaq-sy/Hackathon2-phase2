@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "name": "hackathon2-phase2",
+  "alias": ["hackathon2-phase2"],
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "env": {
+    "NEXT_PUBLIC_BACKEND_URL": {
+      "description": "Backend API URL",
+      "required": true
+    },
+    "NEXT_PUBLIC_BETTER_AUTH_SECRET": {
+      "description": "Better Auth secret key",
+      "required": true
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://backend-api-url.vercel.app/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/$1"
+    }
+  ]
+}
