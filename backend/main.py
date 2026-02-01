@@ -2,20 +2,22 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from contextlib import asynccontextmanager
-from database import engine, init_db
 from routes import tasks, auth
 from settings import settings
 from middleware.jwt import JWTAuthMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
+import os
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan events"""
-    # Startup
-    init_db()
+    # Startup - only run migrations in non-serverless environment
+    if not os.environ.get("VERCEL"):
+        from database import init_db
+        init_db()
     yield
     # Shutdown
     pass
@@ -41,7 +43,7 @@ app.add_middleware(
 # Add trusted host middleware
 app.add_middleware(
     TrustedHostMiddleware,
-    allowed_hosts=["localhost", "127.0.0.1", "*.localhost"]
+    allowed_hosts=["localhost", "127.0.0.1", "*.localhost", "*.vercel.app", "*"]
 )
 
 # Add JWT authentication middleware
@@ -98,6 +100,12 @@ async def root():
         "version": settings.VERSION,
         "documentation": "/docs"
     }
+
+
+@app.get("/health")
+async def health():
+    """Health check endpoint"""
+    return {"status": "ok"}
 
 
 @app.get("/health")

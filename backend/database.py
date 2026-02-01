@@ -1,9 +1,10 @@
 from sqlmodel import create_engine, Session, SQLModel
-from sqlalchemy.pool import QueuePool
+from sqlalchemy.pool import NullPool
 from sqlalchemy import text
 from typing import Generator
 from settings import settings
 import logging
+import os
 # Import models to register them with SQLModel
 from models import User, Task
 
@@ -11,18 +12,17 @@ from models import User, Task
 logging.basicConfig()
 logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
+# Use NullPool for serverless environments (Vercel)
+is_serverless = os.environ.get("VERCEL", False)
+
 # Create database engine for Neon PostgreSQL
 engine = create_engine(
     settings.DATABASE_URL,
     echo=settings.DEBUG,
-    poolclass=QueuePool,
-    pool_size=10,
-    max_overflow=20,
-    pool_pre_ping=True,
-    pool_recycle=3600,
+    poolclass=NullPool,  # Better for serverless
     connect_args={
         "sslmode": "require",
-        "connect_timeout": 10,
+        "connect_timeout": 30,
     } if "neon.tech" in settings.DATABASE_URL else {}
 )
 

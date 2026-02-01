@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     """Application settings loaded from environment variables"""
 
     # Database
-    DATABASE_URL: str = "postgresql://neondb_owner:npg_jQlCFhNc31os@ep-steep-snow-a4dn6pvn-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+    DATABASE_URL: str = "postgresql://neondb_owner:npg_jQlCFhNc31os@ep-steep-snow-a4dn6pvn-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
 
     # Authentication
     BETTER_AUTH_SECRET: str = "your-secret-key-change-in-production"
@@ -18,7 +18,7 @@ class Settings(BaseSettings):
 
     # CORS
     FRONTEND_URL: str = "http://localhost:3000"
-    ALLOWED_ORIGINS: list = ["http://localhost:3000", "https://your-deployment-url.com"]
+    ALLOWED_ORIGINS: list = ["http://localhost:3000", "https://*.vercel.app", "*"]
 
     # Qdrant Configuration
     QDRANT_URL: str = "https://8b21963a-7d0a-413a-915e-f58b2071a7b7.europe-west3-0.gcp.cloud.qdrant.io"
